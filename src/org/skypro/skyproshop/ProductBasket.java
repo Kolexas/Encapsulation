@@ -2,8 +2,8 @@ package org.skypro.skyproshop;
 
 import java.util.Arrays;
 
-public class ProductBasket {
-    Product[] basket = new Product[5];
+ class ProductBasket {
+    private Product[] basket = new Product[5];
 
     public int findSpace() {
         for (int i = 0; i < basket.length; i++) {
