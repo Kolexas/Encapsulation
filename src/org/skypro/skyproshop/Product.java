@@ -1,8 +1,9 @@
 package org.skypro.skyproshop;
 
+import SearchEngine.Searchable;
 import java.util.Objects;
 
-public abstract class Product {
+public abstract class Product implements Searchable {
     private final String name;
 
     public Product(String name) {
@@ -17,6 +18,7 @@ public abstract class Product {
 
     public abstract int getPrice();
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -28,5 +30,15 @@ public abstract class Product {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
+    }
+
+    @Override
+    public String getSearchTerm() {
+        return getName();
+    }
+
+    @Override
+    public String getTypeOfContent() {
+        return "PRODUCT";
     }
 }
