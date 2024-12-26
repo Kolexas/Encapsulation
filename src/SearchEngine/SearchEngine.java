@@ -60,13 +60,13 @@ public class SearchEngine {
         Searchable bestMatch = null;
         int maxCount = 0;
         for (Searchable searchable : engine) {
-                int count = Matching(searchable, search);
-                if (count > maxCount) {
-                    maxCount = count;
-                    bestMatch = searchable;
-                }
+            int count = Matching(searchable, search);
+            if (count > maxCount) {
+                maxCount = count;
+                bestMatch = searchable;
             }
-        if (bestMatch ==null) {
+        }
+        if (bestMatch == null) {
             throw new BestResultNotFound("Для поискового запроса не нашлось подходящего товара/статьи");
         }
         return bestMatch;
