@@ -1,5 +1,7 @@
 package SearchEngine;
 
+import SearchEngine.Errors.BestResultNotFound;
+
 public class SearchEngine {
     Searchable[] engine;
 
@@ -36,5 +38,37 @@ public class SearchEngine {
             throw new ArrayIndexOutOfBoundsException("Невозможно добавить в поиск");
         }
         engine[i] = searchable;
+    }
+
+    private int Matching(Searchable searchable, String search) {
+        if (searchable == null || search == null || search.isEmpty()) {
+            return 0;
+        }
+        String text = searchable.getSearchTerm();
+        int count = 0;
+        int index = 0;
+        int substringIndex = text.indexOf(search, index);
+        while (substringIndex != -1) {
+            count++;
+            index += search.length();
+            substringIndex = text.indexOf(search, index);
+        }
+        return count;
+    }
+
+    public Searchable findBestMatch(String search) {
+        Searchable bestMatch = null;
+        int maxCount = 0;
+        for (Searchable searchable : engine) {
+                int count = Matching(searchable, search);
+                if (count > maxCount) {
+                    maxCount = count;
+                    bestMatch = searchable;
+                }
+            }
+        if (bestMatch ==null) {
+            throw new BestResultNotFound("Для поискового запроса не нашлось подходящего товара/статьи");
+        }
+        return bestMatch;
     }
 }

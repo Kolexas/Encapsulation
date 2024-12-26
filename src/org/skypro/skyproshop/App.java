@@ -1,8 +1,7 @@
 package org.skypro.skyproshop;
 
+import SearchEngine.Errors.BestResultNotFound;
 import SearchEngine.SearchEngine;
-import SearchEngine.Article;
-
 import java.util.Arrays;
 
 public class App {
@@ -31,7 +30,7 @@ public class App {
         basket2.addProduct(new DiscountedProduct("Колбаса", 10, 600));
         basket2.addProduct(new SimpleProduct("Мандарины", 100));
         basket2.listOfProducts();
-        SearchEngine engine = new SearchEngine(10);
+        SearchEngine engine = new SearchEngine(11);
         engine.addSearchable(new FixPriceProduct("Малина"));
         engine.addSearchable(new SimpleProduct("Банан", 150));
         engine.addSearchable(new SimpleProduct("Клубника", 300));
@@ -42,6 +41,31 @@ public class App {
         engine.addSearchable(new Article("Мандарины", "Из Абхазии"));
         engine.addSearchable(new Article("Вино", "Из Грузии"));
         System.out.println(Arrays.toString(engine.search("Мандарины")));
-
+        ProductBasket basket3 = new ProductBasket();
+        try {
+            basket3.addProduct(new SimpleProduct(" ", 120));
+        } catch (IllegalArgumentException exp_name) {
+            System.out.println(exp_name);
+        }
+        try {
+            basket3.addProduct(new SimpleProduct("Банан", -150));
+        } catch (IllegalArgumentException exp_price) {
+            System.out.println(exp_price);
+        }
+        try {
+            basket3.addProduct(new DiscountedProduct("Малина", 120, 150));
+        } catch (IllegalArgumentException exp_discount) {
+            System.out.println(exp_discount);
+        }
+        try {
+            System.out.println(engine.findBestMatch("Малина"));
+        } catch (BestResultNotFound exp_noResult) {
+            System.out.println(exp_noResult);
+        }
+        try {
+            System.out.println(engine.findBestMatch("Ручка"));
+        } catch (BestResultNotFound exp_noResult) {
+            System.out.println(exp_noResult);
+        }
     }
 }

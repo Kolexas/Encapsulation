@@ -1,4 +1,6 @@
-package SearchEngine;
+package org.skypro.skyproshop;
+
+import SearchEngine.Searchable;
 
 public class Article implements Searchable {
     private String articleName;
