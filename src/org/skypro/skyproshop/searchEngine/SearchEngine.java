@@ -1,6 +1,6 @@
-package SearchEngine;
+package org.skypro.skyproshop.searchEngine;
 
-import SearchEngine.Errors.BestResultNotFound;
+import org.skypro.skyproshop.exception.BestResultNotFound;
 
 public class SearchEngine {
     Searchable[] engine;
@@ -40,7 +40,7 @@ public class SearchEngine {
         engine[i] = searchable;
     }
 
-    private int Matching(Searchable searchable, String search) {
+    private int countNumberOfMatches(Searchable searchable, String search) {
         if (searchable == null || search == null || search.isEmpty()) {
             return 0;
         }
@@ -56,11 +56,11 @@ public class SearchEngine {
         return count;
     }
 
-    public Searchable findBestMatch(String search) {
+    public Searchable findBestMatch(String search) throws BestResultNotFound {
         Searchable bestMatch = null;
         int maxCount = 0;
         for (Searchable searchable : engine) {
-            int count = Matching(searchable, search);
+            int count = countNumberOfMatches(searchable, search);
             if (count > maxCount) {
                 maxCount = count;
                 bestMatch = searchable;

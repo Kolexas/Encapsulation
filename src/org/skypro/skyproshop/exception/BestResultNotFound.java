@@ -1,6 +1,6 @@
-package SearchEngine.Errors;
+package org.skypro.skyproshop.exception;
 
-public class BestResultNotFound extends Error {
+public class BestResultNotFound extends Exception {
     public BestResultNotFound() {
     }
 

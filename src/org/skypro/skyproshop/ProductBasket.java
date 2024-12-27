@@ -1,5 +1,7 @@
 package org.skypro.skyproshop;
 
+import org.skypro.skyproshop.product.Product;
+
 import java.util.Arrays;
 
 class ProductBasket {

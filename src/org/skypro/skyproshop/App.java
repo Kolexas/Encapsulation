@@ -1,7 +1,8 @@
 package org.skypro.skyproshop;
 
-import SearchEngine.Errors.BestResultNotFound;
-import SearchEngine.SearchEngine;
+import org.skypro.skyproshop.exception.BestResultNotFound;
+import org.skypro.skyproshop.product.*;
+import org.skypro.skyproshop.searchEngine.SearchEngine;
 import java.util.Arrays;
 
 public class App {
