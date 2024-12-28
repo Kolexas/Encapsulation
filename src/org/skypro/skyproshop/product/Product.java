@@ -1,6 +1,7 @@
-package org.skypro.skyproshop;
+package org.skypro.skyproshop.product;
 
-import SearchEngine.Searchable;
+import org.skypro.skyproshop.searchEngine.Searchable;
+
 import java.util.Objects;
 
 public abstract class Product implements Searchable {
@@ -8,6 +9,9 @@ public abstract class Product implements Searchable {
 
     public Product(String name) {
         this.name = name;
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Такого товара не существует");
+        }
     }
 
     public abstract boolean isSpecial();

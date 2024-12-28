@@ -1,6 +1,6 @@
-package org.skypro.skyproshop;
+package org.skypro.skyproshop.product;
 
-class DiscountedProduct extends Product {
+public class DiscountedProduct extends Product {
     private int basePrice;
     private float discount;
 
@@ -8,6 +8,9 @@ class DiscountedProduct extends Product {
         super(name);
         this.discount = discount;
         this.basePrice = basePrice;
+        if (discount < 0 || discount > 100) {
+            throw new IllegalArgumentException("Такая скидка невозможна");
+        }
     }
 
     public int getPrice() {
