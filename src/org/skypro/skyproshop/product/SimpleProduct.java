@@ -1,11 +1,14 @@
-package org.skypro.skyproshop;
+package org.skypro.skyproshop.product;
 
-class SimpleProduct extends Product {
+public class SimpleProduct extends Product {
     private int price;
 
     public SimpleProduct(String name, int price) {
         super(name);
         this.price = price;
+        if (price <= 0) {
+            throw new IllegalArgumentException("Отрицательная цена");
+        }
     }
 
     public int getPrice() {
