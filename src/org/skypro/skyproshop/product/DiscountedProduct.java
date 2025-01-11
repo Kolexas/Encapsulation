@@ -1,6 +1,6 @@
 package org.skypro.skyproshop.product;
 
- public class DiscountedProduct extends Product {
+public class DiscountedProduct extends Product {
     private int basePrice;
     private float discount;
 

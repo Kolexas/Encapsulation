@@ -1,6 +1,7 @@
 package org.skypro.skyproshop.product;
 
 import org.skypro.skyproshop.searchEngine.Searchable;
+
 import java.util.Objects;
 
 public abstract class Product implements Searchable {

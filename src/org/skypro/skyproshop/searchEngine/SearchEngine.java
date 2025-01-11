@@ -1,43 +1,30 @@
 package org.skypro.skyproshop.searchEngine;
 
 import org.skypro.skyproshop.exception.BestResultNotFound;
+import org.skypro.skyproshop.product.Product;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
 public class SearchEngine {
-    Searchable[] engine;
+    List<Searchable> engine = new ArrayList<>();
 
-    public SearchEngine(int size) {
-        engine = new Searchable[size];
-    }
-
-    public String[] search(String name) {
-        String[] result = new String[5];
-        int count = 0;
-        for (Searchable searchable : engine) {
-            if (searchable != null && searchable.getSearchTerm().contains(name)) {
-                result[count++] = searchable.getStringRepresentation();
-                if (count == 5) {
-                    break;
-                }
+    public List<Searchable> search(String name) {
+        List<Searchable> result = new ArrayList<>();
+        Iterator<Searchable> iterator = engine.iterator();
+        while (iterator.hasNext()) {
+            Searchable element = iterator.next();
+            if (element.getSearchTerm().contains(name)) {
+                result.add(element);
             }
         }
         return result;
     }
 
-    public int findSpaceInEngine() {
-        for (int i = 0; i < engine.length; i++) {
-            if (engine[i] == null) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public void addSearchable(Searchable searchable) {
-        int i = findSpaceInEngine();
-        if (i == -1) {
-            throw new ArrayIndexOutOfBoundsException("Невозможно добавить в поиск");
-        }
-        engine[i] = searchable;
+        engine.add(searchable);
     }
 
     private int countNumberOfMatches(Searchable searchable, String search) {
