@@ -4,8 +4,6 @@ import org.skypro.skyproshop.exception.BestResultNotFound;
 import org.skypro.skyproshop.product.*;
 import org.skypro.skyproshop.searchEngine.SearchEngine;
 
-import java.util.Arrays;
-
 public class App {
     public static void main(String[] args) {
         ProductBasket basket1 = new ProductBasket();
