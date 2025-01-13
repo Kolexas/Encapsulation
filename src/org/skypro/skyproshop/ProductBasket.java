@@ -4,30 +4,34 @@ import org.skypro.skyproshop.product.Product;
 import java.util.*;
 
 class ProductBasket {
-    private List<Product> basket = new ArrayList<>();
-
+    private HashMap<String, List<Product>> basket = new HashMap<>();
 
     public void addProduct(Product product) {
-        basket.add(product);
+        basket.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
     }
 
     public int totalPrice() {
         int total = 0;
-        for (Product product : basket) {
-            if (product != null) {
-                total += product.getPrice();
+        for (List<Product> productList : basket.values()) {
+            for (Product product : productList) {
+                if (product != null) {
+                    total += product.getPrice();
+                }
             }
+
         }
         return total;
     }
 
     public void listOfProducts() {
         int nullNum = 0;
-        for (Product product : basket) {
-            if (product == null) {
-                nullNum++;
-            } else {
-                System.out.println(product);
+        for (List<Product> productList : basket.values()) {
+            for (Product product : productList) {
+                if (product == null) {
+                    nullNum++;
+                } else {
+                    System.out.println(product);
+                }
             }
         }
         if (nullNum == basket.size()) {
@@ -36,9 +40,11 @@ class ProductBasket {
     }
 
     public boolean isProductInBasket(String name) {
-        for (Product product : basket) {
-            if (product != null && name.equals(product.getName())) {
-                return true;
+        for (List<Product> productList : basket.values()) {
+            for (Product product : productList) {
+                if (product != null && name.equals(product.getName())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -50,10 +56,12 @@ class ProductBasket {
 
     public int counter() {
         int counter = 0;
-        for (Product product : basket) {
-            if (product != null) {
-                if (product.isSpecial()) {
-                    counter++;
+        for (List<Product> productList : basket.values()) {
+            for (Product product : productList) {
+                if (product != null) {
+                    if (product.isSpecial()) {
+                        counter++;
+                    }
                 }
             }
         }
@@ -62,12 +70,12 @@ class ProductBasket {
 
     public List<Product> deleteProduct(String name) {
         List<Product> deletedProducts = new ArrayList<>();
-        Iterator<Product> iterator = basket.iterator();
-        while (iterator.hasNext()) {
-            Product element = iterator.next();
-            if (Objects.equals(element.getName(), name)) {
-                deletedProducts.add(element);
-                iterator.remove();
+        for (List<Product> productList : basket.values()) {
+            for (Product product : productList) {
+                if (Objects.equals(product.getName(), name)) {
+                    deletedProducts.add(product);
+                    basket.remove(product.getName());
+                }
             }
         }
         if (deletedProducts.isEmpty()) {
