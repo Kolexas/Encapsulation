@@ -1,30 +1,25 @@
 package org.skypro.skyproshop.searchEngine;
 
 import org.skypro.skyproshop.exception.BestResultNotFound;
-import org.skypro.skyproshop.product.Product;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class SearchEngine {
-    List<Searchable> engine = new ArrayList<>();
+    private HashMap<String, List<Searchable>> engine = new HashMap<>();
+
+    public void addSearchable(Searchable searchable) {
+        engine.computeIfAbsent(searchable.getSearchTerm(), k -> new ArrayList<>()).add(searchable);
+    }
 
     public List<Searchable> search(String name) {
         List<Searchable> result = new ArrayList<>();
-        Iterator<Searchable> iterator = engine.iterator();
-        while (iterator.hasNext()) {
-            Searchable element = iterator.next();
-            if (element.getSearchTerm().contains(name)) {
-                result.add(element);
+        for (List<Searchable> searchablesList : engine.values()) {
+            for (Searchable searchable : searchablesList) {
+                if (searchable.getSearchTerm().contains(name)) {
+                    result.add(searchable);
+                }
             }
         }
         return result;
-    }
-
-    public void addSearchable(Searchable searchable) {
-        engine.add(searchable);
     }
 
     private int countNumberOfMatches(Searchable searchable, String search) {
@@ -46,11 +41,13 @@ public class SearchEngine {
     public Searchable findBestMatch(String search) throws BestResultNotFound {
         Searchable bestMatch = null;
         int maxCount = 0;
-        for (Searchable searchable : engine) {
-            int count = countNumberOfMatches(searchable, search);
-            if (count > maxCount) {
-                maxCount = count;
-                bestMatch = searchable;
+        for (List<Searchable> searchablesList : engine.values()) {
+            for (Searchable searchable : searchablesList) {
+                int count = countNumberOfMatches(searchable, search);
+                if (count > maxCount) {
+                    maxCount = count;
+                    bestMatch = searchable;
+                }
             }
         }
         if (bestMatch == null) {
