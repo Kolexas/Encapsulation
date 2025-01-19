@@ -44,4 +44,5 @@ public abstract class Product implements Searchable {
     public String getTypeOfContent() {
         return "PRODUCT";
     }
+
 }

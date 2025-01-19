@@ -40,14 +40,7 @@ class ProductBasket {
     }
 
     public boolean isProductInBasket(String name) {
-        for (List<Product> productList : basket.values()) {
-            for (Product product : productList) {
-                if (product != null && name.equals(product.getName())) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return basket.containsKey(name);
     }
 
     public void clearBasket() {

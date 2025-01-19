@@ -40,7 +40,10 @@ public class App {
         engine.addSearchable(new DiscountedProduct("Колбаса", 10, 600));
         engine.addSearchable(new Article("Мандарины", "из Абхазии"));
         engine.addSearchable(new Article("Вино", "из Грузии"));
-        System.out.println((engine.search("Мандарины")));
+        engine.addSearchable(new SimpleProduct("Мёд", 150));
+        engine.addSearchable(new SimpleProduct("Мюсли", 220));
+        engine.addSearchable(new SimpleProduct("Мясо", 250));
+        System.out.println((engine.search("М")));
         ProductBasket basket3 = new ProductBasket();
         basket3.addProduct((new SimpleProduct("Малина", 150)));
         basket3.addProduct((new SimpleProduct("Мандарины", 150)));
