@@ -4,10 +4,14 @@ import org.skypro.skyproshop.exception.BestResultNotFound;
 import java.util.*;
 
 public class SearchEngine {
-    private HashMap<String, HashSet<Searchable>> engine = new HashMap<>();
+    private final Set<Searchable> engine;
+
+    public SearchEngine() {
+        this.engine = new HashSet<>();
+    }
 
     public void addSearchable(Searchable searchable) {
-        engine.computeIfAbsent(searchable.getSearchTerm(), k -> new HashSet<>()).add(searchable);
+        engine.add(searchable);
     }
 
     public TreeSet<Searchable> search(String name) {
@@ -20,11 +24,9 @@ public class SearchEngine {
                 return o1.getSearchTerm().compareTo(o2.getSearchTerm());
             }
         });
-        for (HashSet<Searchable> searchablesList : engine.values()) {
-            for (Searchable searchable : searchablesList) {
-                if (searchable.getSearchTerm().contains(name)) {
-                    result.add(searchable);
-                }
+        for (Searchable searchable : engine) {
+            if (searchable.getSearchTerm().contains(name)) {
+                result.add(searchable);
             }
         }
         return result;
@@ -49,13 +51,11 @@ public class SearchEngine {
     public Searchable findBestMatch(String search) throws BestResultNotFound {
         Searchable bestMatch = null;
         int maxCount = 0;
-        for (HashSet<Searchable> searchablesList : engine.values()) {
-            for (Searchable searchable : searchablesList) {
-                int count = countNumberOfMatches(searchable, search);
-                if (count > maxCount) {
-                    maxCount = count;
-                    bestMatch = searchable;
-                }
+        for (Searchable searchable : engine) {
+            int count = countNumberOfMatches(searchable, search);
+            if (count > maxCount) {
+                maxCount = count;
+                bestMatch = searchable;
             }
         }
         if (bestMatch == null) {
